@@ -2,6 +2,7 @@
   "name": "new-api-web-workspace",
   "private": true,
   "workspaces": [
+    "atompump",
     "default",
     "classic"
   ],

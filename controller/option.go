@@ -216,10 +216,10 @@ func UpdateOption(c *gin.Context) {
 			return
 		}
 	case "theme.frontend":
-		if option.Value != "default" && option.Value != "classic" {
+		if option.Value != "atompump" && option.Value != "default" && option.Value != "classic" {
 			c.JSON(http.StatusOK, gin.H{
 				"success": false,
-				"message": "无效的主题值，可选值：default（新版前端）、classic（经典前端）",
+				"message": "无效的主题值，可选值：atompump、default（新版前端）、classic（经典前端）",
 			})
 			return
 		}
