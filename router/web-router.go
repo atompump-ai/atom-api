@@ -13,14 +13,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// ThemeAssets holds the embedded frontend assets used by the bundled app.
+// ThemeAssets holds the embedded frontend assets for both themes.
 type ThemeAssets struct {
-	BuildFS   embed.FS
-	IndexPage []byte
+	DefaultBuildFS   embed.FS
+	DefaultIndexPage []byte
+	ClassicBuildFS   embed.FS
+	ClassicIndexPage []byte
 }
 
 func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
-	themeFS := common.EmbedFolder(assets.BuildFS, "web/atompump/dist")
+	defaultFS := common.EmbedFolder(assets.DefaultBuildFS, "web/default/dist")
+	classicFS := common.EmbedFolder(assets.ClassicBuildFS, "web/classic/dist")
+	themeFS := common.NewThemeAwareFS(defaultFS, classicFS)
 
 	router.Use(gzip.Gzip(gzip.DefaultCompression))
 	router.Use(middleware.GlobalWebRateLimit())
@@ -33,6 +37,10 @@ func SetWebRouter(router *gin.Engine, assets ThemeAssets) {
 			return
 		}
 		c.Header("Cache-Control", "no-cache")
-		c.Data(http.StatusOK, "text/html; charset=utf-8", assets.IndexPage)
+		if common.GetTheme() == "classic" {
+			c.Data(http.StatusOK, "text/html; charset=utf-8", assets.ClassicIndexPage)
+		} else {
+			c.Data(http.StatusOK, "text/html; charset=utf-8", assets.DefaultIndexPage)
+		}
 	})
 }

@@ -22,7 +22,7 @@ var TopUpLink = ""
 var themeValue atomic.Value // stores string; safe for concurrent read/write
 
 func init() {
-	themeValue.Store("atompump")
+	themeValue.Store("classic")
 }
 
 func GetTheme() string {
@@ -30,20 +30,22 @@ func GetTheme() string {
 }
 
 // SetTheme updates the frontend theme atomically.
-// AtomPump is the bundled production frontend. The upstream default/classic
-// values are still accepted so existing database settings remain compatible.
+// Only "default" and "classic" are accepted; other values are silently ignored.
 func SetTheme(t string) {
-	if t == "atompump" || t == "default" || t == "classic" {
+	if t == "default" || t == "classic" {
 		themeValue.Store(t)
 	}
 }
 
-// ThemeAwarePath rewrites legacy /console/* paths to the AtomPump/default
-// equivalents. This build serves AtomPump, so saved upstream theme settings
-// must not send users back to routes that only existed in the classic SPA.
-// The function only touches known prefixes so it is safe to call with
-// arbitrary suffixes and query strings.
+// ThemeAwarePath rewrites legacy /console/* paths to the default-theme
+// equivalents when the active theme is "default".  For "classic" (or any
+// other theme) the path is returned unchanged.  The function only touches
+// known prefixes so it is safe to call with arbitrary suffixes and query
+// strings.
 func ThemeAwarePath(suffix string) string {
+	if GetTheme() != "default" {
+		return suffix
+	}
 	switch {
 	case strings.HasPrefix(suffix, "/console/topup"):
 		return strings.Replace(suffix, "/console/topup", "/wallet", 1)

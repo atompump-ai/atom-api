@@ -10,7 +10,7 @@ type ThemeSettings struct {
 }
 
 var themeSettings = ThemeSettings{
-	Frontend: "atompump",
+	Frontend: "classic",
 }
 
 func init() {

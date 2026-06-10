@@ -20,6 +20,10 @@ build-frontend:
 	@echo "Building AtomPump frontend..."
 	@cd ./web && bun install --frozen-lockfile
 	@cd $(FRONTEND_DIR) && DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$(cat ../../VERSION) bun run build
+	@rm -rf $(FRONTEND_DEFAULT_DIR)/dist $(FRONTEND_CLASSIC_DIR)/dist
+	@mkdir -p $(FRONTEND_DEFAULT_DIR)/dist $(FRONTEND_CLASSIC_DIR)/dist
+	@cp -R $(FRONTEND_DIR)/dist/. $(FRONTEND_DEFAULT_DIR)/dist/
+	@cp -R $(FRONTEND_DIR)/dist/. $(FRONTEND_CLASSIC_DIR)/dist/
 
 build-frontend-default:
 	@echo "Building default frontend..."
