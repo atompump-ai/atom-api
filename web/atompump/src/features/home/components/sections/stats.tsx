@@ -98,25 +98,27 @@ export function Stats(_props: StatsProps) {
   const { t } = useTranslation()
 
   const stats: StatItem[] = [
-    { end: 50, suffix: '+', label: t('upstream services integrated') },
-    { end: 100, suffix: '+', label: t('model billing support') },
-    { end: 50, suffix: '+', label: t('compatible API routes') },
-    { end: 10, suffix: '+', label: t('scheduling controls') },
+    { end: 99.99, suffix: '%', label: t('service availability'), decimals: 2 },
+    { end: 1000, suffix: '万+', label: t('daily API calls') },
+    { end: 100, suffix: '+', label: t('production models') },
+    { end: 50, suffix: 'ms', label: t('routing latency') },
   ]
 
   return (
-    <div className='border-border/40 bg-muted/10 relative z-10 border-y'>
-      <div className='mx-auto max-w-6xl px-6 py-10 md:py-12'>
-        <div className='grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12'>
-          {stats.map((s) => (
+    <div className='border-border/40 bg-background relative z-10 border-y'>
+      <div className='mx-auto max-w-5xl px-4 py-8 md:py-9'>
+        <div className='grid grid-cols-2 divide-border/50 md:grid-cols-4 md:divide-x'>
+          {stats.map((s, index) => (
             <div
               key={s.label}
-              className='flex flex-col items-center text-center'
+              className={`flex flex-col items-center px-4 py-2 text-center ${
+                index % 2 === 1 ? 'border-l border-border/50 md:border-l-0' : ''
+              }`}
             >
-              <span className='text-2xl font-bold tracking-tight md:text-3xl'>
+              <span className='text-xl font-black tracking-tight md:text-2xl'>
                 <Counter end={s.end} suffix={s.suffix} decimals={s.decimals} />
               </span>
-              <span className='text-muted-foreground mt-1.5 text-xs'>
+              <span className='text-muted-foreground mt-1.5 text-[11px]'>
                 {s.label}
               </span>
             </div>

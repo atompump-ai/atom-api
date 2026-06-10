@@ -21,7 +21,16 @@ import { useAuthStore } from '@/stores/auth-store'
 import { Markdown } from '@/components/ui/markdown'
 import { PublicLayout } from '@/components/layout'
 import { Footer } from '@/components/layout/components/footer'
-import { CTA, Features, Hero, HowItWorks, Stats } from './components'
+import {
+  BuildPossibilities,
+  CTA,
+  DeveloperSection,
+  Hero,
+  HomepageFAQ,
+  ModelShowcase,
+  Stats,
+  WhyAtompump,
+} from './components'
 import { useHomePageContent } from './hooks'
 
 export function Home() {
@@ -61,11 +70,18 @@ export function Home() {
   }
 
   return (
-    <PublicLayout showMainContainer={false}>
+    <PublicLayout
+      showMainContainer={false}
+      showThemeSwitch={false}
+      showNotifications={false}
+    >
       <Hero isAuthenticated={isAuthenticated} />
       <Stats />
-      <Features />
-      <HowItWorks />
+      <ModelShowcase />
+      <BuildPossibilities />
+      <WhyAtompump />
+      <DeveloperSection />
+      <HomepageFAQ />
       <CTA isAuthenticated={isAuthenticated} />
       <Footer />
     </PublicLayout>

@@ -19,12 +19,27 @@ For commercial licensing, please contact support@quantumnous.com
 import { type TopNavLink } from '../types'
 
 /**
- * Default top navigation links
+ * Default public navigation links.
  *
- * In practice, navigation links are dynamically fetched from backend.
- * Priority: Backend dynamic links > Provided navLinks > defaultTopNavLinks
- *
- * This is intentionally empty to encourage backend configuration.
- * If you need fallback links, add them here.
+ * Backend dynamic links still take priority when configured, but the bundled
+ * AtomPump landing page needs a focused fallback for fresh installs.
  */
-export const defaultTopNavLinks: TopNavLink[] = []
+export const defaultTopNavLinks: TopNavLink[] = [
+  {
+    title: 'Home',
+    href: '/',
+  },
+  {
+    title: 'Pricing',
+    href: '/pricing',
+  },
+  {
+    title: 'Model API',
+    href: '#model-api',
+  },
+  {
+    title: 'Docs',
+    href: 'https://docs.newapi.pro',
+    external: true,
+  },
+]
