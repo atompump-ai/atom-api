@@ -17,7 +17,12 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 For commercial licensing, please contact support@quantumnous.com
 */
 export { CTA } from './sections/cta'
+export { BuildPossibilities } from './sections/build-possibilities'
+export { DeveloperSection } from './sections/developer-section'
 export { Features } from './sections/features'
+export { HomepageFAQ } from './sections/homepage-faq'
 export { Hero } from './sections/hero'
 export { HowItWorks } from './sections/how-it-works'
+export { ModelShowcase } from './sections/model-showcase'
 export { Stats } from './sections/stats'
+export { WhyAtompump } from './sections/why-atompump'
