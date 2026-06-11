@@ -35,7 +35,7 @@ export const defaultTopNavLinks: TopNavLink[] = [
   },
   {
     title: 'Model API',
-    href: '#model-api',
+    href: '/explore',
   },
   {
     title: 'Docs',
