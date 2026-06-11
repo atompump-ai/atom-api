@@ -19,7 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import { getLobeIcon } from '@/lib/lobe-icon'
 import { parseTags } from '@/features/pricing/lib/filters'
 import type { PricingModel } from '../types'
-import { ExploreModelCard } from './explore-model-card'
+import { ExploreModelCard, type ExploreModelCardCover } from './explore-model-card'
 
 interface ExploreGridProps {
   models: PricingModel[]
@@ -30,13 +30,12 @@ export function ExploreGrid(props: ExploreGridProps) {
     <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3'>
       {props.models.map((model) => {
         const iconKey = model.icon || model.vendor_icon
-        const icon = iconKey ? (
-          getLobeIcon(iconKey, 22)
-        ) : (
-          <span className='text-muted-foreground text-sm font-bold'>
-            {model.model_name?.charAt(0).toUpperCase() || '?'}
-          </span>
-        )
+        const icon = iconKey ? getLobeIcon(iconKey, 56) : null
+        const initial = model.model_name?.charAt(0).toUpperCase() || '?'
+        const badge =
+          model.vendor_name || (iconKey ? iconKey.split('.')[0] : 'AtomPump')
+
+        const cover: ExploreModelCardCover = { icon, initial, badge }
 
         const endpoints = (model.supported_endpoint_types ?? []).slice(0, 1)
         const tags = parseTags(model.tags).slice(0, 1)
@@ -45,10 +44,10 @@ export function ExploreGrid(props: ExploreGridProps) {
         return (
           <ExploreModelCard
             key={model.id ?? model.model_name}
-            icon={icon}
             name={model.model_name || ''}
             description={model.description}
             pills={pills}
+            cover={cover}
           />
         )
       })}
