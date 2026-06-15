@@ -19,6 +19,7 @@ For commercial licensing, please contact support@quantumnous.com
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PublicLayout, type TopNavLink } from '@/components/layout'
+import { Footer } from '@/components/layout/components/footer'
 import { Button } from '@/components/ui/button'
 import { SearchBar } from '@/features/pricing/components/search-bar'
 import { usePricingData } from '@/features/pricing/hooks/use-pricing-data'
@@ -56,7 +57,7 @@ export function Explore() {
       { title: t('Home'), href: '/' },
       { title: t('Pricing'), href: '/pricing' },
       { title: t('Model API'), href: '/explore' },
-      { title: t('Docs'), href: 'https://docs.newapi.pro', external: true },
+      { title: t('Docs'), href: '/docs/apps' },
     ],
     [t]
   )
@@ -119,6 +120,7 @@ export function Explore() {
           </div>
         </div>
       </div>
+      <Footer />
     </PublicLayout>
   )
 }

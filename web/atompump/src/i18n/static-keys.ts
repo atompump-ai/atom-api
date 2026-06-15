@@ -16,6 +16,8 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
+import { DOCS_APPS_I18N_KEYS } from '@/features/docs/apps/constants'
+
 // Static translation keys that don't get picked up by the t('...') regex.
 // These cover dynamic labels (e.g. constants, configs) that are passed into t at runtime.
 export const STATIC_I18N_KEYS = [
@@ -551,4 +553,5 @@ export const STATIC_I18N_KEYS = [
   'Failed to load',
   'Expired at',
   'Cancelled at',
+  ...DOCS_APPS_I18N_KEYS,
 ] as const

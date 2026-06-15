@@ -16,29 +16,9 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { type TopNavLink } from '../types'
+import { createFileRoute } from '@tanstack/react-router'
+import { DocsApps } from '@/features/docs/apps'
 
-/**
- * Default public navigation links.
- *
- * Backend dynamic links still take priority when configured, but the bundled
- * AtomPump landing page needs a focused fallback for fresh installs.
- */
-export const defaultTopNavLinks: TopNavLink[] = [
-  {
-    title: 'Home',
-    href: '/',
-  },
-  {
-    title: 'Pricing',
-    href: '/pricing',
-  },
-  {
-    title: 'Model API',
-    href: '/explore',
-  },
-  {
-    title: 'Docs',
-    href: '/docs/apps',
-  },
-]
+export const Route = createFileRoute('/docs/apps/')({
+  component: DocsApps,
+})
