@@ -23,7 +23,6 @@ import { PublicLayout } from '@/components/layout'
 import { Footer } from '@/components/layout/components/footer'
 import {
   BuildPossibilities,
-  CTA,
   DeveloperSection,
   Hero,
   HomepageFAQ,
@@ -76,7 +75,6 @@ export function Home() {
       <WhyAtompump />
       <DeveloperSection />
       <HomepageFAQ />
-      <CTA isAuthenticated={isAuthenticated} />
       <Footer />
     </PublicLayout>
   )

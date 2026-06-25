@@ -16,7 +16,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-export { CTA } from './sections/cta'
 export { BuildPossibilities } from './sections/build-possibilities'
 export { DeveloperSection } from './sections/developer-section'
 export { Features } from './sections/features'
