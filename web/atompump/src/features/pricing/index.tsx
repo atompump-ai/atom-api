@@ -16,7 +16,6 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 For commercial licensing, please contact support@quantumnous.com
 */
-import { useMemo } from 'react'
 import { Link } from '@tanstack/react-router'
 import {
   ArrowRight,
@@ -51,8 +50,7 @@ function Hero() {
   const isAuthenticated = !!auth.user
 
   return (
-    <section className='relative z-10 overflow-hidden px-4 pt-28 pb-10 md:pt-32 md:pb-14'>
-      <div className='pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_24%,rgba(124,58,237,0.16),transparent_38%),linear-gradient(180deg,rgba(250,250,252,0.95),rgba(255,255,255,0))] dark:bg-[radial-gradient(circle_at_50%_24%,rgba(124,58,237,0.22),transparent_38%)]' />
+    <section className='relative z-10 overflow-hidden px-4 pt-20 pb-10 md:pt-24 md:pb-14'>
       <div className='mx-auto flex max-w-4xl flex-col items-center text-center'>
         <h1 className='text-[clamp(2.5rem,7vw,5rem)] leading-[1.05] font-black tracking-tight'>
           <span className='text-violet-600 dark:text-violet-400'>
@@ -300,15 +298,12 @@ function DarkCTA() {
 }
 
 export function Pricing() {
-  const { t } = useTranslation()
   const {
     models,
     isLoading,
     priceRate,
     usdExchangeRate,
   } = usePricingData()
-
-  const totalRows = useMemo(() => models?.length || 0, [models])
 
   if (isLoading) {
     return (
@@ -326,18 +321,6 @@ export function Pricing() {
         <div className='relative'>
           <Hero />
           <section className='relative z-10 px-4 py-6 md:py-8'>
-            <AnimateInView className='text-center'>
-              <p className='text-muted-foreground/70 mx-auto max-w-2xl text-xs leading-6 sm:text-sm'>
-                {t(
-                  'Prices below reflect the live list rate of each upstream provider and the lowest available group ratio on this account.'
-                )}
-              </p>
-              {totalRows > 0 && (
-                <p className='text-muted-foreground/50 mt-2 text-xs'>
-                  {t('{{count}} models available', { count: totalRows })}
-                </p>
-              )}
-            </AnimateInView>
             <div className='mt-6'>
               <MarketingPricingTable
                 models={models || []}
