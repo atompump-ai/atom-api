@@ -54,6 +54,11 @@ export default defineConfig(({ envMode }) => {
       entry: {
         index: './src/main.tsx',
       },
+      // The root tsconfig.json is a project-references shell (used by IDE/editor only).
+      // Rsbuild's ts-loader does not understand project references and reports
+      // "Tsconfig not found" for the entire project; point it at tsconfig.app.json
+      // which carries the real compilerOptions and source include.
+      tsconfigPath: './tsconfig.app.json',
     },
     resolve: {
       alias: {
