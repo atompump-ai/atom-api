@@ -20,7 +20,6 @@ import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   IconDiscord,
-  IconGithub,
   IconLinuxDo,
   IconWeChat,
 } from '@/assets/brand-icons'
@@ -55,9 +54,6 @@ export function OAuthProviders({
   const { t } = useTranslation()
   const {
     isLoading,
-    githubButtonText,
-    githubButtonDisabled,
-    handleGitHubLogin,
     handleDiscordLogin,
     handleOIDCLogin,
     handleLinuxDOLogin,
@@ -74,16 +70,6 @@ export function OAuthProviders({
       onClick: onWeChatLogin,
       icon: <IconWeChat className='h-4 w-4' />,
       disabled: isWeChatLoading,
-    })
-  }
-
-  if (status?.github_oauth) {
-    providerButtons.push({
-      key: 'github',
-      label: githubButtonText || t('Continue with GitHub'),
-      onClick: handleGitHubLogin,
-      icon: <IconGithub className='h-4 w-4' />,
-      disabled: githubButtonDisabled,
     })
   }
 

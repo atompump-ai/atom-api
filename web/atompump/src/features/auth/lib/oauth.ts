@@ -19,7 +19,6 @@ For commercial licensing, please contact support@quantumnous.com
 import type { SystemStatus, OAuthProvider } from '../types'
 
 export {
-  buildGitHubOAuthUrl,
   buildDiscordOAuthUrl,
   buildOIDCOAuthUrl,
   buildLinuxDOOAuthUrl,
@@ -38,15 +37,6 @@ export function getAvailableOAuthProviders(
   if (!status) return []
 
   const providers: OAuthProvider[] = []
-
-  if (status.github_oauth) {
-    providers.push({
-      name: 'GitHub',
-      type: 'github',
-      enabled: true,
-      clientId: status.github_client_id,
-    })
-  }
 
   if (status.discord_oauth) {
     providers.push({
@@ -93,7 +83,6 @@ export function getAvailableOAuthProviders(
 export function hasOAuthProviders(status: SystemStatus | null): boolean {
   if (!status) return false
   return !!(
-    status.github_oauth ||
     status.discord_oauth ||
     status.oidc_enabled ||
     status.linuxdo_oauth ||
