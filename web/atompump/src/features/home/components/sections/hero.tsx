@@ -94,12 +94,12 @@ export function Hero(props: HeroProps) {
         </div>
 
         <h1
-          className='landing-animate-fade-up max-w-5xl text-[clamp(3rem,8vw,6.75rem)] leading-[0.98] font-black opacity-0'
+          className='landing-animate-fade-up max-w-5xl text-[clamp(2.25rem,5vw,4.5rem)] leading-[0.98] font-black opacity-0'
           style={{ animationDelay: '60ms' }}
         >
           <span>{t('Unified gateway to')}</span>
           <br />
-          <span className='text-violet-600 dark:text-violet-400'>100+ </span>
+          <span className='text-violet-600 dark:text-violet-400'>{t('Multiple')} </span>
           <span className='text-violet-600 dark:text-violet-400'>
             {t('production AI models')}
           </span>
