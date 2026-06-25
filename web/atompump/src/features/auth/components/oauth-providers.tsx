@@ -20,6 +20,7 @@ import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   IconDiscord,
+  IconGoogle,
   IconLinuxDo,
   IconWeChat,
 } from '@/assets/brand-icons'
@@ -107,14 +108,32 @@ export function OAuthProviders({
     })
   }
 
-  // Custom OAuth providers
+  // Custom OAuth providers — Google is rendered with the official colored
+  // G logo, other custom providers fall back to the icon URL returned
+  // by the admin dashboard.
   const customProviders = status?.custom_oauth_providers
   if (customProviders && customProviders.length > 0) {
-    for (const provider of customProviders) {
+    const sorted = [...customProviders].sort((a, b) => {
+      if (a.slug === 'google') return -1
+      if (b.slug === 'google') return 1
+      return 0
+    })
+    for (const provider of sorted) {
+      const icon =
+        provider.slug === 'google' ? (
+          <IconGoogle className='h-4 w-4' />
+        ) : provider.icon ? (
+          <img
+            src={provider.icon}
+            alt={provider.name}
+            className='h-4 w-4 rounded-sm object-contain'
+          />
+        ) : undefined
       providerButtons.push({
         key: `custom-${provider.slug}`,
         label: t('Continue with {{name}}', { name: provider.name }),
         onClick: () => handleCustomOAuthLogin(provider),
+        icon,
       })
     }
   }
