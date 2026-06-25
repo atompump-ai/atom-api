@@ -20,7 +20,6 @@ import { useCallback, useEffect, useRef } from 'react'
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, KeyRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useStatus } from '@/hooks/use-status'
 import { Button } from '@/components/ui/button'
 
 interface HeroProps {
@@ -107,9 +106,6 @@ function Counter(props: CounterProps) {
 
 export function Hero(props: HeroProps) {
   const { t } = useTranslation()
-  const { status } = useStatus()
-  const docsUrl =
-    (status?.docs_link as string | undefined) || 'https://docs.newapi.pro'
 
   const stats: StatItem[] = [
     { end: 99.99, suffix: '%', label: t('service availability'), decimals: 2 },
@@ -127,14 +123,12 @@ export function Hero(props: HeroProps) {
 
         <p className='text-muted-foreground mt-5 max-w-2xl text-base leading-7 md:text-lg'>
           {t('Unified AI API gateway subtitle')}{' '}
-          <a
-            href={docsUrl}
-            target='_blank'
-            rel='noopener noreferrer'
+          <Link
+            to='/docs/apps'
             className='text-blue-500 hover:underline'
           >
             {t('Docs')}
-          </a>
+          </Link>
         </p>
 
         <div className='mt-7 flex flex-wrap items-center justify-center gap-3'>
