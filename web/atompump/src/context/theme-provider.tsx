@@ -18,21 +18,21 @@ For commercial licensing, please contact support@quantumnous.com
 */
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from 'react'
-import { getCookie, setCookie, removeCookie } from '@/lib/cookies'
 
 type Theme = 'dark' | 'light' | 'system'
 type ResolvedTheme = Exclude<Theme, 'system'>
 
-const DEFAULT_THEME = 'system'
-const THEME_COOKIE_NAME = 'vite-ui-theme'
-const THEME_COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // 1 year
-const THEMES = new Set<Theme>(['dark', 'light', 'system'])
+// AtomPump is a light-only theme: every page renders against a white
+// background. The previous behavior (light/dark/system with cookie
+// persistence) was removed, but the provider API is kept so that
+// dashboard charts that read `resolvedTheme` from context still work.
+const FORCED_THEME: Theme = 'light'
+const FORCED_RESOLVED: ResolvedTheme = 'light'
 
 type ThemeProviderProps = {
   children: React.ReactNode
@@ -49,84 +49,42 @@ type ThemeProviderState = {
 }
 
 const initialState: ThemeProviderState = {
-  defaultTheme: DEFAULT_THEME,
-  resolvedTheme: 'light',
-  theme: DEFAULT_THEME,
+  defaultTheme: FORCED_THEME,
+  resolvedTheme: FORCED_RESOLVED,
+  theme: FORCED_THEME,
   setTheme: () => null,
   resetTheme: () => null,
 }
 
 const ThemeContext = createContext<ThemeProviderState>(initialState)
 
-function getSystemTheme(): ResolvedTheme {
-  if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
-}
-
-function resolveTheme(theme: Theme): ResolvedTheme {
-  return theme === 'system' ? getSystemTheme() : theme
-}
-
-function getStoredTheme(storageKey: string, fallback: Theme): Theme {
-  const storedTheme = getCookie(storageKey) as Theme | undefined
-  return storedTheme && THEMES.has(storedTheme) ? storedTheme : fallback
-}
-
-export function ThemeProvider({
-  children,
-  defaultTheme = DEFAULT_THEME,
-  storageKey = THEME_COOKIE_NAME,
-  ...props
-}: ThemeProviderProps) {
-  const [theme, _setTheme] = useState<Theme>(() =>
-    getStoredTheme(storageKey, defaultTheme)
-  )
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() =>
-    resolveTheme(getStoredTheme(storageKey, defaultTheme))
-  )
+export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
+  // Light-only: ignore defaultTheme, storageKey, and any previous cookie
+  // value the user might have set before this change.
+  const [theme] = useState<Theme>(FORCED_THEME)
+  const [resolvedTheme, setResolvedTheme] =
+    useState<ResolvedTheme>(FORCED_RESOLVED)
 
   useEffect(() => {
     const root = window.document.documentElement
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    root.classList.remove('dark', 'light')
+    root.classList.add(FORCED_RESOLVED)
+    setResolvedTheme(FORCED_RESOLVED)
+  }, [])
 
-    const applyTheme = () => {
-      const nextResolvedTheme = theme === 'system' ? getSystemTheme() : theme
-      root.classList.remove('light', 'dark')
-      root.classList.add(nextResolvedTheme)
-      setResolvedTheme(nextResolvedTheme)
-    }
-
-    applyTheme()
-
-    mediaQuery.addEventListener('change', applyTheme)
-
-    return () => mediaQuery.removeEventListener('change', applyTheme)
-  }, [theme])
-
-  const setTheme = useCallback(
-    (theme: Theme) => {
-      setCookie(storageKey, theme, THEME_COOKIE_MAX_AGE)
-      _setTheme(theme)
-    },
-    [storageKey]
-  )
-
-  const resetTheme = useCallback(() => {
-    removeCookie(storageKey)
-    _setTheme(defaultTheme)
-  }, [defaultTheme, storageKey])
+  // No-op setters kept for API compatibility with prior callers.
+  const setTheme = () => null
+  const resetTheme = () => null
 
   const contextValue = useMemo(
     () => ({
-      defaultTheme,
+      defaultTheme: FORCED_THEME,
       resolvedTheme,
       resetTheme,
       theme,
       setTheme,
     }),
-    [defaultTheme, resolvedTheme, resetTheme, theme, setTheme]
+    [resolvedTheme, theme]
   )
 
   return (
