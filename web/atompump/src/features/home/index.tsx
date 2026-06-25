@@ -28,7 +28,6 @@ import {
   Hero,
   HomepageFAQ,
   ModelShowcase,
-  Stats,
   WhyAtompump,
 } from './components'
 import { useHomePageContent } from './hooks'
@@ -76,7 +75,6 @@ export function Home() {
       showNotifications={false}
     >
       <Hero isAuthenticated={isAuthenticated} />
-      <Stats />
       <ModelShowcase />
       <BuildPossibilities />
       <WhyAtompump />
