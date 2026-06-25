@@ -20,7 +20,6 @@ import { useCallback, useEffect, useRef } from 'react'
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, KeyRound } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { getLobeIcon } from '@/lib/lobe-icon'
 import { useStatus } from '@/hooks/use-status'
 import { Button } from '@/components/ui/button'
 
@@ -164,7 +163,6 @@ export function Hero(props: HeroProps) {
             render={<Link to='/explore' />}
           >
             <span>{t('Explore Models')}</span>
-            {getLobeIcon('DeepSeek.Color', 18)}
           </Button>
         </div>
 
