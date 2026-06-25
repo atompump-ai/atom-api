@@ -69,11 +69,7 @@ export function Home() {
   }
 
   return (
-    <PublicLayout
-      showMainContainer={false}
-      showThemeSwitch={false}
-      showNotifications={false}
-    >
+    <PublicLayout showMainContainer={false}>
       <Hero isAuthenticated={isAuthenticated} />
       <ModelShowcase />
       <BuildPossibilities />
