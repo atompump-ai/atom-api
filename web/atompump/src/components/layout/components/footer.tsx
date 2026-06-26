@@ -100,7 +100,7 @@ function FooterInfo() {
         </h2>
         <div className='grid gap-4 text-sm text-muted-foreground sm:grid-cols-2'>
           <div className='space-y-1.5'>
-            <p className='font-medium text-foreground/80'>{t('Personal Users')}</p>
+            <p className='font-medium text-foreground/80'>{t('Technical Support')}</p>
             <a
               href='mailto:support@atompump.ai'
               className='break-all transition-colors hover:text-foreground'
@@ -121,7 +121,7 @@ function FooterInfo() {
           </div>
           <div className='space-y-1.5 sm:col-span-2'>
             <p className='font-medium text-foreground/80'>{t('Payment Methods')}</p>
-            <p>xxxx</p>
+            <p>Stripe</p>
           </div>
         </div>
       </section>
